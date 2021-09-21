@@ -1,0 +1,46 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class MyImage extends StatelessWidget {
+  const MyImage({Key? key, this.image}) : super(key: key);
+
+  final image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+        backgroundColor: CupertinoColors.systemYellow,
+        body: _scrollImage(image));
+
+  }
+
+
+  Widget _scrollImage(String image) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SliverAppBar(
+            expandedHeight: MediaQuery.of(context).size.height / 2,
+            backgroundColor: Colors.transparent,
+            floating: false,
+            pinned: true,
+            snap: false,
+            flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                //titlePadding: EdgeInsetsDirectional.all(0),
+                title: Text(
+                  'Toto',
+                ),
+                background: Image.network(
+                  image,
+                  fit: BoxFit.fitWidth,
+                )),
+          ),
+
+        ];
+      }, body: Text('blablabla'),);
+  }
+}
