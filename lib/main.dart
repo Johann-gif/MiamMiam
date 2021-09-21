@@ -193,13 +193,7 @@ class Accueil extends StatelessWidget {
                     ),
                     Column( children: [
                       Container(
-                          child: Row(
-                            children: [
-                              Icon(Icons.favorite_border),
-                              Icon(Icons.star_border),
-                              Icon(Icons.add)
-                            ],
-                          )
+                          child: Icon(Icons.favorite_border),
                       ),
                       Container(
                           width: double.infinity,
