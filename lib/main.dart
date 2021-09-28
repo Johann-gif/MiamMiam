@@ -282,8 +282,8 @@ class _RechercheState extends State<Recherche> {
             filterSearchResults(value);
           },
           decoration: InputDecoration(
-              labelText: "Search",
-              hintText: "Search",
+              labelText: "Rechercher",
+              hintText: "Quiche loraine...",
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)))),
