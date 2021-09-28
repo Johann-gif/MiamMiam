@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "61934567002",
+    "project_id": "fluttermiam",
+    "storage_bucket": "fluttermiam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61934567002:android:8cbd7827eac57abfc76263",
+        "android_client_info": {
+          "package_name": "com.miammiam.miammiam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61934567002-uc476p1cm0dq9pqlbe9t88mdmumqqfv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyfmqhBIXRXkuRwP9vjmKN-U1bnd3NxoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61934567002-uc476p1cm0dq9pqlbe9t88mdmumqqfv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
