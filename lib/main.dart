@@ -225,7 +225,7 @@ class Recherche extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(children: [
+        child: SingleChildScrollView(child:Column(children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
@@ -274,7 +274,7 @@ class Recherche extends StatelessWidget {
       ]),),
       //Text("Recherche"),
       Lottie.asset("36895-healthy-or-junk-food.json")
-    ]));
+    ])));
   }
 }
 
