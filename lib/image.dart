@@ -11,7 +11,7 @@ class MyImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-        backgroundColor: CupertinoColors.systemYellow,
+        backgroundColor: Colors.white,
         body: _scrollImage(image));
 
   }
@@ -23,6 +23,7 @@ class MyImage extends StatelessWidget {
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
           SliverAppBar(
+            foregroundColor: Colors.black,
             expandedHeight: MediaQuery.of(context).size.height / 2,
             backgroundColor: Colors.transparent,
             floating: false,
