@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'image.dart';
 
@@ -58,15 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _favoris = Favoris();
   Widget _profil = Profil();
 
-
-
   void _incrementCounter() {
-    setState(() {
-    });
+    setState(() {});
   }
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -74,12 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget getBody( )  {
-    if(this._selectedIndex == 0) {
+  Widget getBody() {
+    if (this._selectedIndex == 0) {
       return this._accueil;
-    } else if(this._selectedIndex==1) {
+    } else if (this._selectedIndex == 1) {
       return this._recherche;
-    } else if(this._selectedIndex==2){
+    } else if (this._selectedIndex == 2) {
       return this._favoris;
     } else {
       return this._profil;
@@ -101,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: getBody(),
-      floatingActionButton: FloatingActionButton.extended (
+      floatingActionButton: FloatingActionButton.extended(
         elevation: 4.0,
         icon: const Icon(Icons.add),
         label: const Text('Ajouter une recette'),
@@ -111,22 +110,30 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home,),
+            icon: Icon(
+              Icons.home,
+            ),
             label: 'Accueil',
             tooltip: 'Accueil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search,),
+            icon: Icon(
+              Icons.search,
+            ),
             label: 'Rechercher',
             tooltip: 'Rechercher',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite,),
+            icon: Icon(
+              Icons.favorite,
+            ),
             label: 'Favoris',
             tooltip: 'Favoris',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,),
+            icon: Icon(
+              Icons.account_circle,
+            ),
             label: 'Profil',
             tooltip: 'Profil',
             //backgroundColor: Colors.grey,
@@ -138,10 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedItemColor: Colors.blue,
         showUnselectedLabels: true,
       ),
-
     );
   }
-
 }
 
 class Accueil extends StatelessWidget {
@@ -161,6 +166,7 @@ class Accueil extends StatelessWidget {
     'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg',
     'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg',
   ];
+
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
@@ -191,9 +197,9 @@ class Accueil extends StatelessWidget {
                                 MyImage(image: imageList[index])));
                       },
                     ),
-                    Column( children: [
+                    Column(children: [
                       Container(
-                          child: Icon(Icons.favorite_border),
+                        child: Icon(Icons.favorite_border),
                       ),
                       Container(
                           width: double.infinity,
@@ -205,7 +211,8 @@ class Accueil extends StatelessWidget {
                                 color: CupertinoColors.black,
                                 fontSize: 25,
                               )))
-                    ])]));
+                    ])
+                  ]));
         },
         staggeredTileBuilder: (index) {
           return StaggeredTile.count(1, 1.5);
@@ -217,7 +224,57 @@ class Accueil extends StatelessWidget {
 class Recherche extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Recherche"));
+    return Center(
+        child: Column(children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          //controller: editingController,
+          decoration: InputDecoration(
+              labelText: "Search",
+              hintText: "Search",
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+        ),
+      ),
+    Padding(
+    padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+    child:Row(children:[
+    Padding(
+    padding: const EdgeInsets.only(right: 8.0),
+    child:TextButton(onPressed: () {}, child: Text("Entrée"),style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.red)
+                )
+            )
+        )),),
+    Padding(
+    padding: const EdgeInsets.only(right: 8.0),
+    child:TextButton(onPressed: () {}, child: Text("Plat"),style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.red)
+              )
+          )
+      )),),
+    Padding(
+    padding: const EdgeInsets.only(right: 8.0),
+    child:TextButton(onPressed: () {}, child: Text("Dessert"),style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.red)
+              )
+          )
+      )),),
+      ]),),
+      //Text("Recherche"),
+      Lottie.asset("36895-healthy-or-junk-food.json")
+    ]));
   }
 }
 
