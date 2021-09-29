@@ -37,7 +37,7 @@ class MyImage extends StatelessWidget {
                 ),
                 background: Image.network(
                   image,
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                 )),
           ),
 
