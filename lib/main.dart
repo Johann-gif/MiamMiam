@@ -178,9 +178,8 @@ class Accueil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      //Carroussel(),
-      Padding(
+    return Carroussel()
+      /*Padding(
         padding: const EdgeInsets.all(8.0),
         child: StaggeredGridView.countBuilder(
             crossAxisCount: 2,
@@ -227,10 +226,10 @@ class Accueil extends StatelessWidget {
                               height: 30,
                               color: Colors.white.withOpacity(0.7),
                               //alignment: Alignment.bottomCenter,
-                              /*decoration: BoxDecoration(
+                              *//*decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
-                              ),*/
+                              ),*//*
                               child: Padding(
                                   padding:
                                       EdgeInsets.only(right: 8.0, left: 8.0),
@@ -247,7 +246,7 @@ class Accueil extends StatelessWidget {
             staggeredTileBuilder: (index) {
               return StaggeredTile.count(1, 1);
               //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-            }))]);
+            }))*/;
   }
 }
 
@@ -414,8 +413,8 @@ class Item3 extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            'assets/flutter_dev.png',
+          Image.network(
+            'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg',
             height: 180.0,
             fit: BoxFit.cover,
           )
