@@ -178,11 +178,13 @@ class Accueil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Carroussel()
-      /*Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StaggeredGridView.countBuilder(
+    return ListView(
+      children: [
+        Carroussel(),
+        StaggeredGridView.countBuilder(
+            shrinkWrap: true,
             crossAxisCount: 2,
+            physics: ClampingScrollPhysics(),
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
             itemCount: imageList.length,
@@ -197,7 +199,7 @@ class Accueil extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                              BorderRadius.all(Radius.circular(15)),
                               image: DecorationImage(
                                 image: NetworkImage(imageList[index]),
                                 fit: BoxFit.cover,
@@ -212,41 +214,43 @@ class Accueil extends StatelessWidget {
                         ),
                         Container(
                             child: Column(children: [
-                          Expanded(
-                            child: Container(
-                                alignment: Alignment.topRight,
-                                child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
-                                )),),
-                          ),
-                          Expanded(child: Container(), flex: 8),
-                          Container(
-                              width: double.infinity,
-                              height: 30,
-                              color: Colors.white.withOpacity(0.7),
-                              //alignment: Alignment.bottomCenter,
-                              *//*decoration: BoxDecoration(
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                  )),),
+                              ),
+                              Expanded(child: Container(), flex: 8),
+                              Container(
+                                  width: double.infinity,
+                                  height: 30,
+                                  color: Colors.white.withOpacity(0.7),
+                                  //alignment: Alignment.bottomCenter,
+                                  /*decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
-                              ),*//*
-                              child: Padding(
-                                  padding:
+                              ),*/
+                                  child: Padding(
+                                      padding:
                                       EdgeInsets.only(right: 8.0, left: 8.0),
-                                  child: FittedBox(
-                                      fit: BoxFit.contain,
-                                      child: Text('Crevettes coréennes',
-                                          style: GoogleFonts.indieFlower(
-                                            color: CupertinoColors.black,
-                                            //fontSize: 25,
-                                          ))))),
-                        ]))
+                                      child: FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: Text('Crevettes coréennes',
+                                              style: GoogleFonts.indieFlower(
+                                                color: CupertinoColors.black,
+                                                //fontSize: 25,
+                                              ))))),
+                            ]))
                       ]));
             },
             staggeredTileBuilder: (index) {
               return StaggeredTile.count(1, 1);
               //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-            }))*/;
+            })
+      ],
+    );
   }
 }
 
