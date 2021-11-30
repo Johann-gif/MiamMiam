@@ -310,14 +310,7 @@ class _RecepeState extends State<Recepes> {
           return Text("Loading");
         }
 
-        return ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            print(document.id);
-            print(data);
-            /*return StaggeredGridView.countBuilder(
+        return StaggeredGridView.countBuilder(
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 physics: ClampingScrollPhysics(),
@@ -337,7 +330,7 @@ class _RecepeState extends State<Recepes> {
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(15)),
                                   image: DecorationImage(
-                                    image: NetworkImage(data['image_url']),
+                                    image: NetworkImage(snapshot.data!.docs[index].get('image_url')),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -345,7 +338,7 @@ class _RecepeState extends State<Recepes> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        MyImage(image: data['image_url'], id: document.id)));
+                                        MyImage(image: snapshot.data!.docs[index].get('image_url'), id: snapshot.data!.docs[index].id)));
                               },
                             ),
                             Container(
@@ -368,7 +361,7 @@ class _RecepeState extends State<Recepes> {
                                           EdgeInsets.only(right: 8.0, left: 8.0),
                                           child: FittedBox(
                                               fit: BoxFit.contain,
-                                              child: Text(data['title'],
+                                              child: Text(snapshot.data!.docs[index].get('title'),
                                                   style: GoogleFonts.indieFlower(
                                                     color: CupertinoColors.black,
                                                   ))))),
@@ -378,12 +371,7 @@ class _RecepeState extends State<Recepes> {
                 staggeredTileBuilder: (index) {
                   return StaggeredTile.count(1, 1);
                 });
-            return ListTile(
-              title: Text(data['title']),
-              subtitle: Text(data['image_url']),
-            );
-          }).toList(),*/
-            return InkWell(
+            /*return InkWell(
                 child: ListTile(
         title: Text(data['title']),
         subtitle: Text(data['image_url']),
@@ -393,11 +381,8 @@ class _RecepeState extends State<Recepes> {
             builder: (context) =>
             MyImage(image: data['image_url'], id: document.id)));
             },);
-      }).toList(),
-        );
-      },
-    );
-  }
+      }).toList(),*/
+  });}
 }
 
 class Carroussel extends StatefulWidget {
