@@ -294,13 +294,14 @@ class Recepes extends StatefulWidget {
 }
 
 class _RecepeState extends State<Recepes> {
-  final Stream<QuerySnapshot> _recepesStream = FirebaseFirestore.instance.collection('users').snapshots();
+  final Stream<QuerySnapshot> _recepesStream = FirebaseFirestore.instance.collection('recepes').snapshots();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _recepesStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        //print(snapshot.data!.docs);
         if (snapshot.hasError) {
           return Text('Something went wrong');
         }
@@ -314,14 +315,15 @@ class _RecepeState extends State<Recepes> {
           shrinkWrap: true,
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
-            /*return StaggeredGridView.countBuilder(
+            //print(data);
+            print(snapshot.data!.docs.length);
+            return StaggeredGridView.countBuilder(
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 physics: ClampingScrollPhysics(),
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                itemCount: data.length,
+                itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return Container(
                       decoration: BoxDecoration(
@@ -361,11 +363,6 @@ class _RecepeState extends State<Recepes> {
                                       width: double.infinity,
                                       height: 30,
                                       color: Colors.white.withOpacity(0.7),
-                                      //alignment: Alignment.bottomCenter,
-                                      *//*decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                              ),*//*
                                       child: Padding(
                                           padding:
                                           EdgeInsets.only(right: 8.0, left: 8.0),
@@ -374,21 +371,19 @@ class _RecepeState extends State<Recepes> {
                                               child: Text(data['title'],
                                                   style: GoogleFonts.indieFlower(
                                                     color: CupertinoColors.black,
-                                                    //fontSize: 25,
                                                   ))))),
                                 ]))
                           ]));
                 },
                 staggeredTileBuilder: (index) {
                   return StaggeredTile.count(1, 1);
-                  //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
                 });
-          }).toList(),*/
-            return ListTile(
+          }).toList(),
+            /*return ListTile(
         title: Text(data['title']),
         subtitle: Text(data['image_url']),
         );
-      }).toList(),
+      }).toList(),*/
         );
       },
     );
