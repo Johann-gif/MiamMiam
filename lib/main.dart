@@ -301,7 +301,7 @@ class _RecepeState extends State<Recepes> {
     return StreamBuilder<QuerySnapshot>(
       stream: _recepesStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        //print(snapshot.data!.docs);
+
         if (snapshot.hasError) {
           return Text('Something went wrong');
         }
@@ -315,9 +315,9 @@ class _RecepeState extends State<Recepes> {
           shrinkWrap: true,
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            //print(data);
-            print(snapshot.data!.docs.length);
-            return StaggeredGridView.countBuilder(
+            print(document.id);
+            print(data);
+            /*return StaggeredGridView.countBuilder(
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 physics: ClampingScrollPhysics(),
@@ -345,7 +345,7 @@ class _RecepeState extends State<Recepes> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        MyImage(image: data['image_url'])));
+                                        MyImage(image: data['image_url'], id: document.id)));
                               },
                             ),
                             Container(
@@ -378,12 +378,16 @@ class _RecepeState extends State<Recepes> {
                 staggeredTileBuilder: (index) {
                   return StaggeredTile.count(1, 1);
                 });
-          }).toList(),
-            /*return ListTile(
+            return ListTile(
+              title: Text(data['title']),
+              subtitle: Text(data['image_url']),
+            );
+          }).toList(),*/
+            return ListTile(
         title: Text(data['title']),
         subtitle: Text(data['image_url']),
         );
-      }).toList(),*/
+      }).toList(),
         );
       },
     );

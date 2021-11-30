@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MyImage extends StatelessWidget {
-  const MyImage({Key? key, this.image}) : super(key: key);
+  const MyImage({Key? key, this.image, this.id}) : super(key: key);
 
   final image;
+  final id;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
         backgroundColor: Colors.white,
-        body: _scrollImage(image));
+        body: _scrollImage(image, id));
 
   }
 
 
-  Widget _scrollImage(String image) {
+  Widget _scrollImage(String image, String id) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -42,6 +43,6 @@ class MyImage extends StatelessWidget {
           ),
 
         ];
-      }, body: Text('blablabla'),);
+      }, body: Text(id),);
   }
 }
