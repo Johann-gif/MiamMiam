@@ -4,19 +4,120 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-
+// Import the firebase_core and cloud_firestore plugin
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'image.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Show error message if initialization failed
+    if(_error) {
+      return SomethingWentWrong();
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Loading();
+    }
+
+    return MyAwesomeApp();
+  }
+}
+
+class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Miam\'Miam',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Text('Loading...')
+    );
+  }
+}
+
+class SomethingWentWrong extends StatelessWidget {
+  const SomethingWentWrong({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Miam\'Miam',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: Text('SomethingWentWrong...')
+    );
+  }
+}
+
+class MyAwesomeApp extends StatelessWidget {
+  const MyAwesomeApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Miam\'Miam',
       theme: ThemeData(
@@ -181,75 +282,115 @@ class Accueil extends StatelessWidget {
     return ListView(
       children: [
         Carroussel(),
-        StaggeredGridView.countBuilder(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            physics: ClampingScrollPhysics(),
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            itemCount: imageList.length,
-            itemBuilder: (context, index) {
-              return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(imageList[index]),
-                                fit: BoxFit.cover,
+        Recepes()
+      ],
+    );
+  }
+}
+
+class Recepes extends StatefulWidget {
+  @override
+  _RecepeState createState() => _RecepeState();
+}
+
+class _RecepeState extends State<Recepes> {
+  final Stream<QuerySnapshot> _recepesStream = FirebaseFirestore.instance.collection('users').snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _recepesStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+            /*return StaggeredGridView.countBuilder(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                physics: ClampingScrollPhysics(),
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      child: Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                                  image: DecorationImage(
+                                    image: NetworkImage(data['image_url']),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyImage(image: data['image_url'])));
+                              },
                             ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    MyImage(image: imageList[index])));
-                          },
-                        ),
-                        Container(
-                            child: Column(children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                  )),),
-                              ),
-                              Expanded(child: Container(), flex: 8),
-                              Container(
-                                  width: double.infinity,
-                                  height: 30,
-                                  color: Colors.white.withOpacity(0.7),
-                                  //alignment: Alignment.bottomCenter,
-                                  /*decoration: BoxDecoration(
+                            Container(
+                                child: Column(children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.topRight,
+                                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.white,
+                                      )),),
+                                  ),
+                                  Expanded(child: Container(), flex: 8),
+                                  Container(
+                                      width: double.infinity,
+                                      height: 30,
+                                      color: Colors.white.withOpacity(0.7),
+                                      //alignment: Alignment.bottomCenter,
+                                      *//*decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
-                              ),*/
-                                  child: Padding(
-                                      padding:
-                                      EdgeInsets.only(right: 8.0, left: 8.0),
-                                      child: FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text('Crevettes coréennes',
-                                              style: GoogleFonts.indieFlower(
-                                                color: CupertinoColors.black,
-                                                //fontSize: 25,
-                                              ))))),
-                            ]))
-                      ]));
-            },
-            staggeredTileBuilder: (index) {
-              return StaggeredTile.count(1, 1);
-              //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-            })
-      ],
+                              ),*//*
+                                      child: Padding(
+                                          padding:
+                                          EdgeInsets.only(right: 8.0, left: 8.0),
+                                          child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(data['title'],
+                                                  style: GoogleFonts.indieFlower(
+                                                    color: CupertinoColors.black,
+                                                    //fontSize: 25,
+                                                  ))))),
+                                ]))
+                          ]));
+                },
+                staggeredTileBuilder: (index) {
+                  return StaggeredTile.count(1, 1);
+                  //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
+                });
+          }).toList(),*/
+            return ListTile(
+        title: Text(data['title']),
+        subtitle: Text(data['image_url']),
+        );
+      }).toList(),
+        );
+      },
     );
   }
 }
@@ -282,10 +423,12 @@ class _CarrousselState extends State<Carroussel> {
       options: CarouselOptions(
         height: 200.0,
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayInterval: Duration(seconds: 5),
+        autoPlayAnimationDuration: Duration(seconds: 2),
         autoPlayCurve: Curves.fastOutSlowIn,
         pauseAutoPlayOnTouch: true,
+        enlargeCenterPage: true,
+        pageSnapping: true,
         aspectRatio: 2.0,
         onPageChanged: (index, reason) {
           setState(() {
@@ -338,27 +481,59 @@ class Item1 extends StatelessWidget {
             colors: [Color(0xffff4000),Color(0xffffcc66),]
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-              "Data",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold
-              )
-          ),
-          Text(
-              "Data",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600
-              )
-          ),
-        ],
-      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(image: 'https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg')
+                    ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
     );
   }
 }
@@ -376,27 +551,59 @@ class Item2 extends StatelessWidget {
             colors: [Color(0xff5f2c82), Color(0xff49a09d)]
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-              "Data",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold
-              )
-          ),
-          Text(
-              "Data",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600
-              )
-          ),
-        ],
-      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.kitchendiet.fr/media/upload/crevettes(1).jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(image: 'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg')
+                ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
     );
   }
 }
@@ -414,16 +621,59 @@ class Item3 extends StatelessWidget {
             colors: [Color(0xffff4000),Color(0xffffcc66),]
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.network(
-            'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg',
-            height: 180.0,
-            fit: BoxFit.cover,
-          )
-        ],
-      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(image: 'https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg')
+                ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
     );
   }
 }
