@@ -503,7 +503,7 @@ class Item1 extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        MyImage(image: 'https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg')
+                        MyImage(id: 'fspofkpkpfokFSF',image: 'https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg')
                     ));
               },
             ),
@@ -573,7 +573,7 @@ class Item2 extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        MyImage(image: 'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg')
+                        MyImage(id: 'fspofkpkpfokFSF', image: 'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg')
                 ));
               },
             ),
@@ -643,7 +643,7 @@ class Item3 extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        MyImage(image: 'https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg')
+                        MyImage(id: 'fspofkpkpfokFSF',image: 'https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg')
                 ));
               },
             ),
