@@ -19,7 +19,8 @@ class MyImage extends StatelessWidget {
 
 
   Widget _scrollImage(String image, String id) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    //Plein écran lors de l'affichage de la fenêtre
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[

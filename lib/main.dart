@@ -383,10 +383,16 @@ class _RecepeState extends State<Recepes> {
               subtitle: Text(data['image_url']),
             );
           }).toList(),*/
-            return ListTile(
+            return InkWell(
+                child: ListTile(
         title: Text(data['title']),
         subtitle: Text(data['image_url']),
-        );
+        ),
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+            MyImage(image: data['image_url'], id: document.id)));
+            },);
       }).toList(),
         );
       },
