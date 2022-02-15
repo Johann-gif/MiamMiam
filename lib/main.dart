@@ -1,22 +1,109 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-
+// Import the firebase_core and cloud_firestore plugin
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'image.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+         options: kIsWeb
+        ? const FirebaseOptions(
+                apiKey: "AIzaSyDeuOaYSfl7QLcH9dkyBrJIxaYN4j1tjbk",
+                authDomain: "fluttermiam.firebaseapp.com",
+                projectId: "fluttermiam",
+                storageBucket: "fluttermiam.appspot.com",
+                messagingSenderId: "61934567002",
+                appId: "1:61934567002:web:904578452d31a081c76263"
+                )
+        : null,
+      );
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  @override
+  void initState() {
+    //TODO
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MyAwesomeApp();}
+}
+
+class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Miam\'Miam',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Text('Loading...')
+    );
+  }
+}
+
+class SomethingWentWrong extends StatelessWidget {
+  const SomethingWentWrong({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Miam\'Miam',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: Text('SomethingWentWrong...')
+    );
+  }
+}
+
+class MyAwesomeApp extends StatelessWidget {
+  const MyAwesomeApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Miam\'Miam',
       theme: ThemeData(
@@ -181,77 +268,107 @@ class Accueil extends StatelessWidget {
     return ListView(
       children: [
         Carroussel(),
-        StaggeredGridView.countBuilder(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            physics: ClampingScrollPhysics(),
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            itemCount: imageList.length,
-            itemBuilder: (context, index) {
-              return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(imageList[index]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    MyImage(image: imageList[index])));
-                          },
-                        ),
-                        Container(
-                            child: Column(children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                  )),),
-                              ),
-                              Expanded(child: Container(), flex: 8),
-                              Container(
-                                  width: double.infinity,
-                                  height: 30,
-                                  color: Colors.white.withOpacity(0.7),
-                                  //alignment: Alignment.bottomCenter,
-                                  /*decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                              ),*/
-                                  child: Padding(
-                                      padding:
-                                      EdgeInsets.only(right: 8.0, left: 8.0),
-                                      child: FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text('Crevettes coréennes',
-                                              style: GoogleFonts.indieFlower(
-                                                color: CupertinoColors.black,
-                                                //fontSize: 25,
-                                              ))))),
-                            ]))
-                      ]));
-            },
-            staggeredTileBuilder: (index) {
-              return StaggeredTile.count(1, 1);
-              //return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-            })
+        Recepes()
       ],
     );
   }
+}
+
+class Recepes extends StatefulWidget {
+  @override
+  _RecepeState createState() => _RecepeState();
+}
+
+class _RecepeState extends State<Recepes> {
+  final Stream<QuerySnapshot> _recepesStream = FirebaseFirestore.instance.collection('recepes').snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _recepesStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return StaggeredGridView.countBuilder(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                physics: ClampingScrollPhysics(),
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      child: Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                                  image: DecorationImage(
+                                    image: NetworkImage(snapshot.data!.docs[index].get('image_url')),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyImage(image: snapshot.data!.docs[index].get('image_url'), id: snapshot.data!.docs[index].id)));
+                              },
+                            ),
+                            Container(
+                                child: Column(children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.topRight,
+                                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.white,
+                                      )),),
+                                  ),
+                                  Expanded(child: Container(), flex: 8),
+                                  Container(
+                                      width: double.infinity,
+                                      height: 30,
+                                      color: Colors.white.withOpacity(0.7),
+                                      child: Padding(
+                                          padding:
+                                          EdgeInsets.only(right: 8.0, left: 8.0),
+                                          child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(snapshot.data!.docs[index].get('title'),
+                                                  style: GoogleFonts.indieFlower(
+                                                    color: CupertinoColors.black,
+                                                  ))))),
+                                ]))
+                          ]));
+                },
+                staggeredTileBuilder: (index) {
+                  return StaggeredTile.count(1, 1);
+                });
+            /*return InkWell(
+                child: ListTile(
+        title: Text(data['title']),
+        subtitle: Text(data['image_url']),
+        ),
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+            MyImage(image: data['image_url'], id: document.id)));
+            },);
+      }).toList(),*/
+  });}
 }
 
 class Carroussel extends StatefulWidget {
@@ -279,6 +396,51 @@ class _CarrousselState extends State<Carroussel> {
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
+
+      options: CarouselOptions(
+        height: 200.0,
+        autoPlay: true,
+        autoPlayInterval: Duration(seconds: 5),
+        autoPlayAnimationDuration: Duration(seconds: 2),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        pauseAutoPlayOnTouch: true,
+        enlargeCenterPage: true,
+        pageSnapping: true,
+        aspectRatio: 2.0,
+        onPageChanged: (index, reason) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+      items: cardList.map((card){
+        return Builder(
+            builder:(BuildContext context){
+              return Container(
+                height: MediaQuery.of(context).size.height*0.30,
+                width: MediaQuery.of(context).size.width,
+                child: Card(
+                  color: Colors.blueAccent,
+                  child: card,
+                ),
+              );
+            }
+        );
+      }).toList(),),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: map<Widget>(cardList, (index, url) {
+            return Container(
+              width: 10.0,
+              height: 10.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _currentIndex == index ? Colors.blueAccent : Colors.grey,
+              ),
+            );
+          }),
+
         options: CarouselOptions(
           height: 200.0,
           autoPlay: true,
@@ -294,6 +456,7 @@ class _CarrousselState extends State<Carroussel> {
               _currentIndex = index;
             });
           },
+
         ),
         items: cardList.map((card){
           return Builder(
@@ -332,6 +495,69 @@ class Item1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.3, 1],
+            colors: [Color(0xffff4000),Color(0xffffcc66),]
+        ),
+      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(id: 'fspofkpkpfokFSF',image: 'https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg')
+                    ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
+
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -393,6 +619,7 @@ class Item1 extends StatelessWidget {
                                     ))))),
                   ]))
             ])
+
     );
   }
 }
@@ -402,6 +629,68 @@ class Item2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.3, 1],
+            colors: [Color(0xff5f2c82), Color(0xff49a09d)]
+        ),
+      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.kitchendiet.fr/media/upload/crevettes(1).jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(id: 'fspofkpkpfokFSF', image: 'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg')
+                ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -463,6 +752,7 @@ class Item2 extends StatelessWidget {
                                     ))))),
                   ]))
             ])
+
     );
   }
 }
@@ -480,6 +770,61 @@ class Item3 extends StatelessWidget {
               colors: [Color(0xffff4000),Color(0xffffcc66),]
           ),
         ),
+
+      ),
+      child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: NetworkImage('https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyImage(id: 'fspofkpkpfokFSF',image: 'https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg')
+                ));
+              },
+            ),
+            Container(
+                child: Column(children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),),
+                  ),
+                  Expanded(child: Container(), flex: 8),
+                  Container(
+                      width: double.infinity,
+                      height: 30,
+                      color: Colors.white.withOpacity(0.7),
+                      //alignment: Alignment.bottomCenter,
+                      /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                      child: Padding(
+                          padding:
+                          EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Crevettes coréennes',
+                                  style: GoogleFonts.indieFlower(
+                                    color: CupertinoColors.black,
+                                    //fontSize: 25,
+                                  ))))),
+                ]))
+          ])
         child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
