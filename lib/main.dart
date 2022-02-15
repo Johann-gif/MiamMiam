@@ -396,6 +396,7 @@ class _CarrousselState extends State<Carroussel> {
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
+
       options: CarouselOptions(
         height: 200.0,
         autoPlay: true,
@@ -439,7 +440,52 @@ class _CarrousselState extends State<Carroussel> {
               ),
             );
           }),
+
+        options: CarouselOptions(
+          height: 200.0,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 5),
+          autoPlayAnimationDuration: Duration(seconds: 2),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          pauseAutoPlayOnTouch: true,
+          enlargeCenterPage: true,
+          pageSnapping: true,
+          aspectRatio: 2.0,
+          onPageChanged: (index, reason) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+
         ),
+        items: cardList.map((card){
+          return Builder(
+              builder:(BuildContext context){
+                return Container(
+                  height: MediaQuery.of(context).size.height*0.30,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    color: Colors.blueAccent,
+                    child: card,
+                  ),
+                );
+              }
+          );
+        }).toList(),),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: map<Widget>(cardList, (index, url) {
+          return Container(
+            width: 10.0,
+            height: 10.0,
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentIndex == index ? Colors.blueAccent : Colors.grey,
+            ),
+          );
+        }),
+      ),
     ]);
   }
 }
@@ -449,6 +495,7 @@ class Item1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -510,6 +557,69 @@ class Item1 extends StatelessWidget {
                                   ))))),
                 ]))
           ])
+
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 1],
+              colors: [Color(0xffff4000),Color(0xffffcc66),]
+          ),
+        ),
+        child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(
+                      image: NetworkImage('https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          MyImage(image: 'https://www.bofrost.fr/medias/paella-royale-00272-1.jpg-W340xH283R1.2?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDE1Nzk2NHxpbWFnZS9qcGVnfHByb2R1Y3QtaW1hZ2VzL2g4Ny9oMTAvODgxNDgwNzg3NTYxNC5qcGd8ZGYyZDg1MzliYjFlNDc5NzQwZjIxZWUxYjEwOWVlMDEzMzYyODFhNWUzYzI3NWVlNGRkMjQ5OGE1NjExZTk1Mg')
+                  ));
+                },
+              ),
+              Container(
+                  child: Column(children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        )),),
+                    ),
+                    Expanded(child: Container(), flex: 8),
+                    Container(
+                        width: double.infinity,
+                        height: 30,
+                        color: Colors.white.withOpacity(0.7),
+                        //alignment: Alignment.bottomCenter,
+                        /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                        child: Padding(
+                            padding:
+                            EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text('Crevettes coréennes',
+                                    style: GoogleFonts.indieFlower(
+                                      color: CupertinoColors.black,
+                                      //fontSize: 25,
+                                    ))))),
+                  ]))
+            ])
+
     );
   }
 }
@@ -519,6 +629,7 @@ class Item2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -580,6 +691,68 @@ class Item2 extends StatelessWidget {
                                   ))))),
                 ]))
           ])
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 1],
+              colors: [Color(0xff5f2c82), Color(0xff49a09d)]
+          ),
+        ),
+        child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(
+                      image: NetworkImage('https://www.kitchendiet.fr/media/upload/crevettes(1).jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          MyImage(image: 'https://www.kitchendiet.fr/media/upload/crevettes(1).jpg')
+                  ));
+                },
+              ),
+              Container(
+                  child: Column(children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        )),),
+                    ),
+                    Expanded(child: Container(), flex: 8),
+                    Container(
+                        width: double.infinity,
+                        height: 30,
+                        color: Colors.white.withOpacity(0.7),
+                        //alignment: Alignment.bottomCenter,
+                        /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                        child: Padding(
+                            padding:
+                            EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text('Crevettes coréennes',
+                                    style: GoogleFonts.indieFlower(
+                                      color: CupertinoColors.black,
+                                      //fontSize: 25,
+                                    ))))),
+                  ]))
+            ])
+
     );
   }
 }
@@ -589,13 +762,15 @@ class Item3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.3, 1],
-            colors: [Color(0xffff4000),Color(0xffffcc66),]
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 1],
+              colors: [Color(0xffff4000),Color(0xffffcc66),]
+          ),
         ),
+
       ),
       child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
@@ -650,9 +825,63 @@ class Item3 extends StatelessWidget {
                                   ))))),
                 ]))
           ])
+        child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(
+                      image: NetworkImage('https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          MyImage(image: 'https://www.bienmanger.com/tinyMceData/images/categories/37/rwd/w870h395_slide-plats-viande.jpg')
+                  ));
+                },
+              ),
+              Container(
+                  child: Column(children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Padding(padding: EdgeInsets.all(8.0),child: Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        )),),
+                    ),
+                    Expanded(child: Container(), flex: 8),
+                    Container(
+                        width: double.infinity,
+                        height: 30,
+                        color: Colors.white.withOpacity(0.7),
+                        //alignment: Alignment.bottomCenter,
+                        /*decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),*/
+                        child: Padding(
+                            padding:
+                            EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text('Crevettes coréennes',
+                                    style: GoogleFonts.indieFlower(
+                                      color: CupertinoColors.black,
+                                      //fontSize: 25,
+                                    ))))),
+                  ]))
+            ])
     );
   }
 }
+
 
 class Recherche extends StatefulWidget {
   const Recherche({Key? key}) : super(key: key);
