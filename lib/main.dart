@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -9,8 +10,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'image.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+         options: kIsWeb
+        ? const FirebaseOptions(
+                apiKey: "AIzaSyDeuOaYSfl7QLcH9dkyBrJIxaYN4j1tjbk",
+                authDomain: "fluttermiam.firebaseapp.com",
+                projectId: "fluttermiam",
+                storageBucket: "fluttermiam.appspot.com",
+                messagingSenderId: "61934567002",
+                appId: "1:61934567002:web:904578452d31a081c76263"
+                )
+        : null,
+      );
   runApp(App());
 }
 
@@ -23,42 +36,15 @@ class _AppState extends State<App> {
   bool _initialized = false;
   bool _error = false;
 
-  // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch(e) {
-      // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
   @override
   void initState() {
-    initializeFlutterFire();
+    //TODO
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Show error message if initialization failed
-    if(_error) {
-      return SomethingWentWrong();
-    }
-
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      return Loading();
-    }
-
-    return MyAwesomeApp();
-  }
+    return MyAwesomeApp();}
 }
 
 class Loading extends StatelessWidget {
