@@ -88,6 +88,54 @@ class _RechercheState extends State<Recherche> {
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(children: [
+            Expanded(
+                child: !rechercheParGenre
+                    ? ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      rechercheParGenre = !rechercheParGenre;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(25.0))),
+                  ),
+                  child: const Text('Rechercher par genres'),
+                )
+                    : ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      rechercheParGenre = !rechercheParGenre;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(25.0))),
+                  ),
+                  child: const Text('Rechercher par texte'),
+                )),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.025,
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  filterSearchResults();
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                ),
+                child: const Text('Rechercher'),
+              ),
+            )
+          ]),
+        ),
       ],
       ),
     );
