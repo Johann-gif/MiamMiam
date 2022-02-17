@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:miammiam/recherche.dart';
 
 import 'accueil.dart';
+import 'favoris.dart';
 import 'image.dart';
 
 void main() {

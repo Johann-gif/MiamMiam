@@ -153,9 +153,3 @@ class _RechercheState extends State<Recherche> {
   }
 }
 
-class Favoris extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Favoris"));
-  }
-}
