@@ -136,6 +136,19 @@ class _RechercheState extends State<Recherche> {
             )
           ]),
         ),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+            child: Row(children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    border: Border.all(
+                      color: Colors.orange,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+              ),
+            ])),
       ],
       ),
     );
