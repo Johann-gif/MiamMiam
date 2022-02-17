@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
   }
 
   _navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {});
+    await Future.delayed(Duration(milliseconds: 2500), () {});
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -34,8 +34,8 @@ class _SplashState extends State<Splash> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/images/alcohol.png', height: 200),
-              Text('TchinTchin',
+              Image.asset('assets/images/logo2.png', height: 200),
+              Text('MiamMiam',
                   style: TextStyle(
                       fontSize: 30,
                       color: const Color(0xff37718E),
