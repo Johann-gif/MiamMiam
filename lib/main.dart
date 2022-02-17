@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:miammiam/profil.dart';
 import 'package:miammiam/recherche.dart';
 
 import 'accueil.dart';
@@ -155,16 +156,5 @@ class _MyHomePageState extends State<MyHomePage> {
         showUnselectedLabels: true,
       ),
     );
-  }
-}
-
-
-
-
-
-class Profil extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Profil"));
   }
 }
