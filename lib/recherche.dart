@@ -14,6 +14,18 @@ class Recherche extends StatefulWidget {
 }
 
 class _RechercheState extends State<Recherche> {
+
+  bool _isAdultOn = false;
+  final ScrollController _scrollController = ScrollController();
+  bool loading = false;
+  bool allLoaded = false;
+  bool init = false;
+  var _genreQuery = '';
+  var _query = '';
+  bool genreOk = false;
+  bool rechercheParGenre = false;
+
+
   bool _isStartersOn = false;
   bool _isDishesOn = false;
   bool _isDesertsOn = false;
@@ -21,9 +33,11 @@ class _RechercheState extends State<Recherche> {
 
   final duplicateItems = List<String>.generate(10, (i) => "Item $i");
 
-  void filterSearchResults(String query) {
+  void filterSearchResults() {
     setState(() {
-      _isSearchEmpty = query.isEmpty;
+      init = false;
+      loading = true;
+      _genreQuery = '';
     });
   }
 
@@ -31,6 +45,7 @@ class _RechercheState extends State<Recherche> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(children: [
+        // check box select
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -147,8 +162,55 @@ class _RechercheState extends State<Recherche> {
                       width: 2,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text('+18',
+                      style: GoogleFonts.roboto(
+                        color: CupertinoColors.black,
+                        fontSize: 15,
+                      )),
+                ),
               ),
             ])),
+
+        !init
+            ? Expanded(child: Lottie.asset("assets/the-panda-eats-popcorn.json"))
+            : Expanded(
+            child: Stack(children: [
+              ListView.separated(
+                itemCount: _films.length,
+                controller: _scrollController,
+                separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      title: Text(_films[index].title!,
+                          style: GoogleFonts.roboto(
+                            color: CupertinoColors.black,
+                            fontSize: 10,
+                          )),
+                      leading: Image.network(_films[index].posterPath != null
+                          ? 'https://image.tmdb.org/t/p/w500' +
+                          _films[index].posterPath!
+                          : 'https://i.imgur.com/R7mqXKL.png'),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                MyImage(film: _films[index])));
+                      }
+                    // action
+                  );
+                },
+              ),
+              if (loading) ...[
+                Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Container(
+                      height: 80,
+                      child: Center(child: CircularProgressIndicator())),
+                ),
+              ]
+            ]))
       ],
       ),
     );
