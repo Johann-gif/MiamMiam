@@ -264,10 +264,12 @@ class _MyImageState extends State<MyImage> {
                           ),
                           for (var i = 0; i < recepe.preparation!.length; i++)
                             Row(children: [
-                              Container(
-                                  padding: EdgeInsets.all(8),
-                              child: Text(recepe.preparation![i],style: GoogleFonts.mochiyPopOne(
-                                fontSize: 12,)))
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.all(8),
+                                child: Text(recepe.preparation![i],style: GoogleFonts.mochiyPopOne(
+                                  fontSize: 12,))),
+                              )
                             ],)
                         ]))
                   ])))),

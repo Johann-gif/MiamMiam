@@ -226,7 +226,7 @@ void filterSearchRecette(){
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                MyImage()));
+                                MyImage(recette: _recettes[index],)));
                       }
                     // action
                   );
