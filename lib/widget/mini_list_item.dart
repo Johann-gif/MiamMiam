@@ -14,13 +14,15 @@ class MiniListItem extends StatefulWidget {
 class _MiniListItemState extends State<MiniListItem> {
   @override
   Widget build(BuildContext context) {
-    return widget.text != null && widget.text != '' ? Container(color: Colors.transparent, child: Container(
-        padding: EdgeInsets.all(8),
-        child:
-        Text(widget.text!,
-            style: GoogleFonts.mochiyPopOne(
-          fontSize: 12,
-        )))) : Text('');
+    return widget.text != null && widget.text != '' ? Container(color: Colors.transparent, child: Expanded(
+      child: Container(
+          padding: EdgeInsets.all(8),
+          child:
+          Text(widget.text!,
+              style: GoogleFonts.mochiyPopOne(
+            fontSize: 12,
+          ))),
+    )) : Text('');
   }
 
 }
