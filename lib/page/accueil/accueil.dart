@@ -29,6 +29,9 @@ class _AccueilState extends State<Accueil> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getEntrees();
+    getPlats();
+    getDesserts();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels +
               MediaQuery.of(context).size.height * 0.30 >=
@@ -36,9 +39,6 @@ class _AccueilState extends State<Accueil> {
         //TODO
       }
     });
-    getEntrees();
-    getPlats();
-    getDesserts();
   }
 
   @override
@@ -51,7 +51,7 @@ class _AccueilState extends State<Accueil> {
   void getEntrees() async {
     List<RecepeModel> list = [];
     final querySnapshot =
-        await recepes.limit(5).where('tags', arrayContains: 'entrée').get();
+        await recepes.limit(5).where('tags', arrayContains: 'entree').get();
     for (var doc in querySnapshot.docs) {
       list.add(RecepeModel.fromMap(doc));
     }
@@ -259,21 +259,8 @@ class _AccueilState extends State<Accueil> {
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) => MyImage(title: snapshot
-                                                  .data!.docs[index]
-                                                  .get('title'), image: snapshot
-                                                  .data!.docs[index]
-                                                  .get('image_url'), description: snapshot
-                                                  .data!.docs[index]
-                                                  .get('description'), ingredients: snapshot
-                                                  .data!.docs[index]
-                                                  .get('ingredients'), preparation: snapshot
-                                                  .data!.docs[index]
-                                                  .get('preparation'), rating: snapshot
-                                                  .data!.docs[index]
-                                                  .get('rating'), tags: snapshot
-                                                  .data!.docs[index]
-                                                  .get('tags'))));
+                                              builder: (context) => MyImage(recette: snapshot
+                                                  .data!.docs[index])));
                                     },
                                   ),
                                   Container(

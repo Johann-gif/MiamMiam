@@ -18,25 +18,19 @@ class _FavorisState extends State<Favoris> {
   late final Box box;
 
   _deleteFavoris(int index) async {
-    //Le deleteAt ne regénère pas les index... problème pour faire une boucle sur l'index du coup.
-    //Suppression custom pour contourner ce problème.
-    //await box.deleteAt(index);
     var listFavori = [];
     for (int i=0;i<box.length;i++){
       if (i == index) {
-        //print("On passe : ${box.getAt(i).title}");
       } else listFavori.add(box.getAt(i));
     }
     await box.clear();
     for (int j=0;j<listFavori.length;j++){
-      //print("On ajoute : ${listFilm[j].title}");
       await box.add(listFavori[j]);
     }
   }
 
   _deleteAllFavoris() {
     box.clear();
-    print('All Item deleted from box');
   }
 
   @override
@@ -48,12 +42,6 @@ class _FavorisState extends State<Favoris> {
 
   @override
   Widget build(BuildContext context) {
-    //final box = Hive.box('favorites');
-    //print(Hive.box("favorites").length);
-    //Hive.box("favorites").clear();
-    debugPrint(
-        "[${DateTime.now()}]: Nombre de favoris dans Hive : ${box.length.toString()}");
-
     return ListView(children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -61,12 +49,12 @@ class _FavorisState extends State<Favoris> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Vos Recettes ',
+            Text('Vos recettes ',
                 style: GoogleFonts.mochiyPopOne(
                   color: CupertinoColors.black,
                   fontSize: 15,
                 )),
-            Text('favoris',
+            Text('favorites',
                 style: GoogleFonts.mochiyPopOne(
                   color: Colors.orange,
                   fontSize: 15,
@@ -114,12 +102,11 @@ class _FavorisState extends State<Favoris> {
                                             image: DecorationImage(
                                               image: NetworkImage(box
                                                   .getAt(index)
-                                                  .backdropPath !=
+                                                  .image_url !=
                                                   null
-                                                  ? 'https://image.tmdb.org/t/p/w500/' +
-                                                  box
+                                                  ? box
                                                       .getAt(index)
-                                                      .backdropPath
+                                                      .image_url
                                                       .toString()
                                                   : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1200px-No_image_3x4.svg.png'),
                                               fit: BoxFit.cover,
@@ -130,7 +117,7 @@ class _FavorisState extends State<Favoris> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) => MyImage(
-                                                      image:box.getAt(index))));
+                                                      recette:box.getAt(index))));
                                         },
                                       ),
                                       Container(

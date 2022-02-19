@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:miammiam/data/models/recepe_model.dart';
 import 'package:miammiam/page/global/loading.dart';
 import 'package:miammiam/page/global/navigation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,6 +12,7 @@ const String CONNECTION_BOX = "connection";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter<RecepeModel>(RecepeModelAdapter());
   await Hive.initFlutter();
   await Hive.openBox(FAVORITES_BOX);
   await Hive.openBox(CONNECTION_BOX);
@@ -25,6 +27,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   FirebaseAuth auth = FirebaseAuth.instance;
+
   final box = Hive.box(CONNECTION_BOX);
   bool init = false;
 
