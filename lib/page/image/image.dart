@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../widget/mini_list_item.dart';
@@ -78,6 +79,39 @@ class MyImage extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             top: 20, left: 22, right: 22),
                         child: Wrap(children: [
+                          for (var i = 0; i < tags.length; i++)
+                            Column(children: [
+                              Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), color: Colors.orange),
+                                  padding: EdgeInsets.all(8),
+                                  margin: EdgeInsets.all(8),
+                                  child: Text(tags[i],style: GoogleFonts.mochiyPopOne(
+                                    fontSize: 12,
+                                  color: Colors.white)))
+                            ],)
+                        ]))
+                  ])))),
+      Container(
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  color: const Color(0xfffafafa),
+                  child: Column(children: [
+                    Container(
+                        margin: const EdgeInsets.only(
+                            top: 20, left: 22, right: 22),
+                        child: Wrap(children: [
+                          Container(
+
+                            child: Text(
+                              'Ingredients',
+                              style: GoogleFonts.mochiyPopOne(
+                                color: Colors.orange,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                           for (var i = 0; i < ingredients.length; i++)
                             Row(children: [
                             MiniListItem(
@@ -92,14 +126,17 @@ class MyImage extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 22, right: 30),
                   color: const Color(0xfffafafa),
                   child: description != null
                       ? Container(
+
                     child: Text(
                       'Description',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.mochiyPopOne(
+                        color: Colors.orange,
+                        fontSize: 18,
+                      ),
                     ),
                   )
                       : Text('')))),
@@ -108,9 +145,10 @@ class MyImage extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   color: const Color(0xfffafafa),
-                  child: Text(description))))
+                  child: Text(description, style: GoogleFonts.mochiyPopOne(
+                      fontSize: 12)))))
           : Container(),
       Container(
           child: Align(
@@ -123,29 +161,25 @@ class MyImage extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             top: 20, left: 22, right: 22),
                         child: Wrap(children: [
+                          Container(
+
+                            child: Text(
+                              'Preparation',
+                              style: GoogleFonts.mochiyPopOne(
+                                color: Colors.orange,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                           for (var i = 0; i < preparation.length; i++)
                             Row(children: [
-                              Text(preparation[i])
+                              Container(
+                                  padding: EdgeInsets.all(8),
+                              child: Text(preparation[i],style: GoogleFonts.mochiyPopOne(
+                                fontSize: 12,)))
                             ],)
                         ]))
                   ])))),
-      Container(
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  color: const Color(0xfffafafa),
-                  child: Column(children: [
-                    Container(
-                        margin: const EdgeInsets.only(
-                            top: 20, left: 22, right: 22),
-                        child: Wrap(children: [
-                          for (var i = 0; i < tags.length; i++)
-                            Row(children: [
-                              Text(tags[i])
-                            ],)
-                        ]))
-                  ]))))
 
 
     ]))

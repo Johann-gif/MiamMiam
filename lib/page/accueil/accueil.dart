@@ -259,7 +259,21 @@ class _AccueilState extends State<Accueil> {
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) => MyImage()));
+                                              builder: (context) => MyImage(title: snapshot
+                                                  .data!.docs[index]
+                                                  .get('title'), image: snapshot
+                                                  .data!.docs[index]
+                                                  .get('image_url'), description: snapshot
+                                                  .data!.docs[index]
+                                                  .get('description'), ingredients: snapshot
+                                                  .data!.docs[index]
+                                                  .get('ingredients'), preparation: snapshot
+                                                  .data!.docs[index]
+                                                  .get('preparation'), rating: snapshot
+                                                  .data!.docs[index]
+                                                  .get('rating'), tags: snapshot
+                                                  .data!.docs[index]
+                                                  .get('tags'))));
                                     },
                                   ),
                                   Container(
