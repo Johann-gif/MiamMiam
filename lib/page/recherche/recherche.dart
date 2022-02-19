@@ -60,37 +60,39 @@ void filterSearchRecette(){
 
     setState(() {
       isSearchEmpty = _query.isEmpty;
+      typesQuery = [];
       init = false;
       _recettes = [];
     });
-
+    print(_query);
       getRecette();
 
 
 }
 
-
   void getRecette() async {
+
     List<RecepeModel> list = [];
     for (var i = 0; i < _selectedItems.length; i++) {
       typesQuery.add(_selectedItems[i]['id']!);
     }
-
-    final querySnapshot = typesQuery.isNotEmpty ?
-    await recepes.where('tags', arrayContainsAny: typesQuery).get() :
-    await recepes.get() ;
-
-    for (var doc in querySnapshot.docs) {
+    Query querySnapshot = recepes;
+    if(typesQuery.isNotEmpty ){
+    querySnapshot = querySnapshot.where('tags', arrayContainsAny: typesQuery);
+    }
+    if (!isSearchEmpty){
+      querySnapshot = querySnapshot.where("title",isEqualTo: _query);
+    }
+    final QuerySnapshot result = await querySnapshot.get() ;
+    for (var doc in result.docs) {
       list.add(RecepeModel.fromMap(doc));
     }
     setState(() {
       _recettes = list;
       init = true;
     });
-
-
-
   }
+
 
 
   @override
