@@ -126,12 +126,12 @@ class _FavorisState extends State<Favoris> {
                                             ),
                                           ),
                                         ),
-      //                                  onTap: () {
-      //                                    Navigator.of(context).push(
-      //                                        MaterialPageRoute(
-      //                                            builder: (context) => MyImage(
-      //                                                image:box.getAt(index))));
-      //                                  },
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) => MyImage(
+                                                      image:box.getAt(index))));
+                                        },
                                       ),
                                       Container(
                                           child: Column(children: [
