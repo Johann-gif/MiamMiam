@@ -101,7 +101,7 @@ class Item extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MyImage()));
+                  MaterialPageRoute(builder: (context) => MyImage(image: recette.image_url)));
             },
           ),
           Container(
