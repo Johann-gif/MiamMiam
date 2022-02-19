@@ -17,33 +17,36 @@ class RecepeModelAdapter extends TypeAdapter<RecepeModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return RecepeModel(
-      title: fields[0] as String?,
-      description: fields[1] as String?,
-      image_url: fields[2] as String?,
-      rating: fields[3] as int?,
-      ingredients: (fields[4] as List?)?.cast<dynamic>(),
-      preparation: (fields[5] as List?)?.cast<dynamic>(),
-      tags: (fields[6] as List?)?.cast<dynamic>(),
+      recepe_id: fields[0] as int?,
+      title: fields[1] as String?,
+      description: fields[2] as String?,
+      image_url: fields[3] as String?,
+      rating: fields[4] as int?,
+      ingredients: (fields[5] as List?)?.cast<dynamic>(),
+      preparation: (fields[6] as List?)?.cast<dynamic>(),
+      tags: (fields[7] as List?)?.cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, RecepeModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.recepe_id)
       ..writeByte(1)
-      ..write(obj.description)
+      ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.image_url)
+      ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.rating)
+      ..write(obj.image_url)
       ..writeByte(4)
-      ..write(obj.ingredients)
+      ..write(obj.rating)
       ..writeByte(5)
-      ..write(obj.preparation)
+      ..write(obj.ingredients)
       ..writeByte(6)
+      ..write(obj.preparation)
+      ..writeByte(7)
       ..write(obj.tags);
   }
 

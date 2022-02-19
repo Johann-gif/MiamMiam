@@ -5,26 +5,29 @@ part '../providers/local/hive/adapters/recepe_model.g.dart';
 @HiveType(typeId: 0)
 class RecepeModel{
   @HiveField(0)
-  String? title;
+  int? recepe_id;
   @HiveField(1)
-  String? description;
+  String? title;
   @HiveField(2)
-  String? image_url;
+  String? description;
   @HiveField(3)
-  int? rating;
+  String? image_url;
   @HiveField(4)
-  List<dynamic>? ingredients;
+  int? rating;
   @HiveField(5)
-  List<dynamic>? preparation;
+  List<dynamic>? ingredients;
   @HiveField(6)
+  List<dynamic>? preparation;
+  @HiveField(7)
   List<dynamic>? tags;
 
-  RecepeModel({this.title, this.description, this.image_url, this.rating, this.ingredients, this.preparation, this.tags});
+  RecepeModel({this.recepe_id, this.title, this.description, this.image_url, this.rating, this.ingredients, this.preparation, this.tags});
 
 
 //retour serveur
   factory RecepeModel.fromMap(map){
     return RecepeModel(
+      recepe_id: map['recepe_id'],
       title: map['title'],
       description: map['description'],
       image_url: map['image_url'],
@@ -38,6 +41,7 @@ class RecepeModel{
 //envoie vers serveur
   Map<String,dynamic> toMap(){
     return{
+      'recepe_id': recepe_id,
       'title': title,
       'description': description,
       'image_url': image_url,

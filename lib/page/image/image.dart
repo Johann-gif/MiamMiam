@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:miammiam/data/models/recepe_model.dart';
 
 import '../../widget/mini_list_item.dart';
+import '../comment/comment.dart';
 
 class MyImage extends StatefulWidget {
   const MyImage({Key? key, this.recette}) : super(key: key);
@@ -268,6 +269,12 @@ class _MyImageState extends State<MyImage> {
                             ],
                           )
                       ]))),
+              Divider(),
+              Container(
+                // don't forget about height
+
+                child: CommentRecepe(recepe: recepe),
+              )
         ])));
   }
 }
