@@ -47,24 +47,52 @@ class MyImage extends StatelessWidget {
           ),
 
         ];
-      }, body: Container(
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-                padding: const EdgeInsets.only(bottom: 30),
-                color: const Color(0xfffafafa),
-                child: Column(children: [
-                  Container(
-                      margin: const EdgeInsets.only(
-                          top: 20, left: 22, right: 22),
-                      child: Wrap(children: [
-                        for (var i = 0; i < ingredients.length; i++)
-                          MiniListItem(
-                              text: ingredients != null &&
-                                  ingredients[i] != null
-                                  ? ingredients[i]
-                                  : '')
-                      ]))
-                ])))),);
-  }
+      }, body: SingleChildScrollView(child: Column(children: [
+      Container(
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  color: const Color(0xfffafafa),
+                  child: Column(children: [
+                    Container(
+                        margin: const EdgeInsets.only(
+                            top: 20, left: 22, right: 22),
+                        child: Wrap(children: [
+                          for (var i = 0; i < ingredients.length; i++)
+                            MiniListItem(
+                                text: ingredients != null &&
+                                    ingredients[i] != null
+                                    ? ingredients[i]
+                                    : '')
+                        ]))
+                  ])))),
+      Container(
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  color: const Color(0xfffafafa),
+                  child: description != null
+                      ? Container(
+                    child: Text(
+                      'Description',
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                      : Text('')))),
+      description != null
+          ? Container(
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  color: const Color(0xfffafafa),
+                  child: Text(description))))
+          : Container(),
+
+
+    ]))
+    );}
 }
