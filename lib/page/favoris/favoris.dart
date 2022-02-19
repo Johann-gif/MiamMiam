@@ -130,7 +130,7 @@ class _FavorisState extends State<Favoris> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) => MyImage(
-                                                      recette:box.getAt(index))));
+                                                      image:box.getAt(index))));
                                         },
                                       ),
                                       Container(
