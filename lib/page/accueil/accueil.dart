@@ -211,64 +211,60 @@ class _AccueilState extends State<Accueil> {
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           return Container(
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: Stack(
-                                  alignment: AlignmentDirectional.bottomCenter,
-                                  children: [
-                                    InkWell(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                          image: DecorationImage(
-                                            image: NetworkImage(snapshot
-                                                .data!.docs[index]
-                                                .get('image_url')),
-                                            fit: BoxFit.cover,
-                                          ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(15))),
+                            child: Stack(
+                                alignment: AlignmentDirectional.bottomCenter,
+                                children: [
+                                  InkWell(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                        image: DecorationImage(
+                                          image: NetworkImage(snapshot
+                                              .data!.docs[index]
+                                              .get('image_url')),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MyImage()));
-                                      },
                                     ),
-                                    Container(
-                                        child: Column(children: [
-                                      Expanded(
-                                        child: Container(
-                                          alignment: Alignment.topRight,
-                                          child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.favorite_border,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                      ),
-                                      Expanded(child: Container(), flex: 8),
-                                      Container(
-                                          width: double.infinity,
-                                          height: 30,
-                                          color: Colors.white.withOpacity(0.7),
-                                          child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: 8.0, left: 8.0),
-                                              child: FittedBox(
-                                                  fit: BoxFit.contain,
-                                                  child: Text(
-                                                      snapshot.data!.docs[index]
-                                                          .get('title'),
-                                                      style: GoogleFonts.roboto(
-                                                        color: CupertinoColors.black,
-                                                        fontSize: 10,
-                                                      ))))),
-                                    ]))
-                                  ]));
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => MyImage()));
+                                    },
+                                  ),
+                                  Container(
+                                      child: Column(children: [
+                                        /*Expanded(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.orange,
+                                      )),
+                                ),
+                              ),*/
+                                        Expanded(child: Container(), flex: 8),
+                                        Container(
+                                            width: double.infinity,
+                                            height: 35,
+                                            color: Colors.white.withOpacity(0.7),
+                                            child: Padding(
+                                                padding:
+                                                EdgeInsets.only(right: 8.0, left: 8.0),
+                                                child: Center(
+                                                    child: Text(snapshot.data!.docs[index]
+                                                        .get('title'),
+                                                        style: GoogleFonts.roboto(
+                                                          color: CupertinoColors.black,
+                                                          fontSize: 10,
+                                                        ))))),
+                                      ]))
+
+                                ]),);
                         });
                   }))
         ],
