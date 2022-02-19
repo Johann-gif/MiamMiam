@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
 
   _getCommentsCount() async {
     await FirebaseFirestore.instance
-        .collection("comment")
+        .collection("comments")
         .where('userId', isEqualTo: user!.uid)
         .get()
         .then((value) {
