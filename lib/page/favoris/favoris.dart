@@ -126,12 +126,12 @@ class _FavorisState extends State<Favoris> {
                                             ),
                                           ),
                                         ),
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) => MyImage(
-                                                      image:box.getAt(index))));
-                                        },
+      //                                  onTap: () {
+      //                                    Navigator.of(context).push(
+      //                                        MaterialPageRoute(
+      //                                            builder: (context) => MyImage(
+      //                                                image:box.getAt(index))));
+      //                                  },
                                       ),
                                       Container(
                                           child: Column(children: [
@@ -177,7 +177,7 @@ class _FavorisState extends State<Favoris> {
           valueListenable: Hive.box('favorites').listenable(),
           builder: (context, Box box, _) {
             if (box.values.length == 0)
-              return Container(child: Lottie.asset("assets/camera-moving.json"));
+              return Container(child: Lottie.asset("assets/wok-pan-food-fry-on-fire.json"));
             return
               Container(
                 child: TextButton(
